@@ -1,0 +1,13 @@
+@import 'utils';
+
+.page-template{
+    /*
+    PageTemplate 에서, 헤더와 푸터사이의 중간영역의 배경색을 회색으로 지정하고, 
+    푸터가 언제나 페이지의 하단에 위치하도록 중간영역의 최소 높이를 지정해주겠습니다. 
+    헤더와 푸터의 크기를 합치면 15rem 이므로, 페이지의 높이에서 15rem 을 뺀 수치를 min-height 로 지정하세요.
+    */
+    main{
+        background: $oc-gray-1;
+        min-height: calc(100vh - 15rem);
+    }
+}

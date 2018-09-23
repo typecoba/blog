@@ -1,0 +1,10 @@
+// lib폴더 전체 import
+@import "lib/all";
+
+// media 구간 변수
+$breakpoints: (
+  small: 320px,
+  medium: 768px,
+  large: 1024px,
+  wide: 1400px
+);

@@ -1,0 +1,16 @@
+/*
+이제 컴포넌트를 스타일링 할 때 사용 할 스타일 유틸을 설정하겠습니다. 
+우리가 적용 할 것은, 색상을 쉽게 선정 할 수 있게 해주는 open-color, 
+반응형 디자인을 쉽게 할 수 있게 해주는 include-media, 
+그리고 그림자를 간편하게 설정 할 수 있는 material-shadow 믹스인을 작성하겠습니다.
+
+open-color 와 include-media 는 yarn 을 통하여 설치 할 수있습니다.
+
+$ yarn add open-color include-media
+
+설치를 하고 나서, styles/lib/_all.scss 파일에서 다음과 같이 스타일 파일들을 불러오세요.
+*/
+
+@import '~open-color/open-color';
+@import '~include-media/dist/include-media';
+@import 'mixins';
