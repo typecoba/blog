@@ -40,7 +40,7 @@ export default handleActions({
     ...pender({
         type: WRITE_POST,
         onSuccess: (state, action) => {
-            const {_id} = action.payload.date;
+            const {_id} = action.payload.data;
             return state.set('postId', _id);
         }
     })

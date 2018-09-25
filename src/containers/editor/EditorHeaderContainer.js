@@ -34,11 +34,11 @@ class EditorHeaderContainer extends Component {
     handleSubmit = async () => {
         const { title, markdown, tags, EditorActions, history } = this.props;
         const post = {
-            title,
+            title: title,
             body: markdown,
             // 태그 텍스트를 , 로 분리시키고 앞뒤 공백을 지운 후 되는 값을 제거해줍니다.
             tags: tags === "" ? [] : [...new Set(tags.split(',').map(tag => tag.trim()))]
-        };
+        }; 
         try {
             await EditorActions.writePost(post);
             // 페이지를 이동시킵니다. 주의: postId를 상단에서 레퍼런스를 만들지 않고 

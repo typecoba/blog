@@ -4,6 +4,14 @@ Prismjs 관련 코드를 불러온 다음에, Prism.highlightAll() 함수를 호
 화면상에 있는 코드블록에 스타일이 입혀집니다.
 이 함수는, 마크다운이 변환되어 html 이 렌더링 된 다음에 반영되어야 합니다. 
 따라서, componentDidUpdate 에서 state 값이 바뀔 때 이 코드를 호출해주세요.
+
+우리가 작성한 마크다운은 잘 렌더링 되지만, 코드 부분이 아직 색상이 안입혀졌습니다. 
+그 이유는, 현재 우리가 만들었던 MarkdownRender 컴포넌트에서 Prism.highlightAll() 이 componentDidUpdate 에서만 실행되기 때문입니다.
+
+에디터에서 마크다운이 변경 될 때에는, 하이라이팅이 제대로 호출이 되지만, 
+지금의 경우처럼 처음부터 마크다운값이 있는 경우에는, componentWillMount 부분에서 마크다운 변환 작업이 일어나서 
+html 상태가 바뀌어도 componentDidUpdate 가 호출되지 않습니다. 따라서, 이를 해결하기 위해선, 
+componentDidMount 에서도 Prism.highlightAll 을 호출해주면 됩니다.
  */
 
 import React, {Component} from 'react';
