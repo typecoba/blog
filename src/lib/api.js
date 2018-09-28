@@ -13,3 +13,5 @@ export const getPost = (id) => axios.get(`/api/posts/${id}`);
 반대로 객체형태를 문자열 형태로 변환 할 수도 있답니다.
  */
 export const getPostList = ({tag,page}) => axios.get(`/api/posts/?${queryString.stringify({tag,page})}`);
+export const editPost = ({id, title, body, tags}) => axios.patch(`/api/posts/${id}`, {title, body, tags});
+export const removePost = (id) => axios.delete(`/api/posts/${id}`);

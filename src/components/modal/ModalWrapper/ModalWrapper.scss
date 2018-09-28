@@ -1,0 +1,85 @@
+/*
+모달이 나타나고 사라질 때, 좀 더 자연스럽게 보여지기 위하여 전환 애니메이션 효과를 설정해봅시다. 전환 효과를 만들 때에는, CSS 의 @keyframes 를 이용하여 구현합니다. @keyframes 를 사용하여 전환 효과의 시작 부분, 
+그리고 마지막 부분의 스타일을 지정해주면 스타일이 서서히 변화하게 되면서 애니메이션 효과가 구현됩니다.
+
+우리는 ModalWrapper.scss 에 총 4가지 종류의 @keyframes 를 만들겠습니다.
+
+fadeIn: 투명도가 0% 100%
+fadeout: 투명도가 100% 0%
+slideUp: 아래에서 위로 올라오는 효과
+slideDown: 위에서 아래로 내려가는 효과
+*/
+
+@import "utils";
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(50vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(50vh);
+  }
+}
+
+.gray-background {
+  background: rgba(100, 100, 100, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+
+  &.enter {
+    animation: fadeIn 0.25s ease-in both;
+  }
+  &.leave {
+    animation: fadeOut 0.25s ease-in both;
+  }
+}
+
+.modal-wrapper {
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .modal {
+    @include material-shadow(3, 0.5);
+    background: white;
+  }
+
+  &.enter {
+    animation: slideUp 0.25s ease-in both;
+  }
+  &.leave {
+    animation: slideDown 0.25s ease-in both;
+  }
+}
