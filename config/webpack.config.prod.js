@@ -55,8 +55,29 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
+
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  // entry: [require.resolve('./polyfills'), paths.appIndexJs],
+
+  /*
+  코드 스플리팅이 제대로 이뤄지도록, webpack.config.prod.js 를 수정하세요. 
+  일단, 자주 변경되지 않는 코드인 react, react-dom, redux, axios, codemirror 등의 라이브러리들을 
+  entry 부분의 vendor 로 추가하세요.
+  */
+  entry:{
+    app: paths.appIndexJs,
+    vender: [
+      require.resolve('./polyfills'),
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'redux',
+      'axios',
+      'codemirror',
+      'prismjs'
+    ],
+  },
+  
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -290,7 +311,22 @@ module.exports = {
       },
     ],
   },
+  /*
+  그 다음엔, 설정 파일 하단의 plugins: [ 쪽으로 스크롤하여 플러그인들은 추가하겠습니다. 
+  vendor 파일이 따로 분리되고, 중복되는 코드가 다른 파일에 들어가지 않도록 CommonsChunkPlugin 을 설정하고, 
+  “pages” 를 import 하게 되면 index.js 가 아닌 index.async.js 를 불러오도록 하기 위하여 
+  NormalModuleReplacementPlugin 을 적용하세요.
+  */
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vender',
+    }),
+    new webpack.NormalModuleReplacementPlugin(
+      /^pages$/,
+      'pages/index.async.js'
+    ),
+
+
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -343,6 +379,7 @@ module.exports = {
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
+      allChunks: true
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
